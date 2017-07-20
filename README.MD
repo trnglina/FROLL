@@ -24,11 +24,9 @@ In its current state, many features are not yet supported, yet support may be ad
 
 ## TODO
 
-- [ ] Sanitize input to avoid crashing
+- [ ] Validate input in `froll` module.
 
-- [ ] Validate input to avoid crashing
-
-- [ ] Better command line tool
+- [ ] Build a new command line program
 
 ## Why Fortran
 
