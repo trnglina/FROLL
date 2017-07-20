@@ -22,11 +22,11 @@ In its current state, many features are not yet supported, yet support may be ad
 
 - Selective results
 
----
+## TODO
 
-- Validate input to avoid crashing
+- [ ] Validate input to avoid crashing
 
-- Better command line tool
+- [ ] Better command line tool
 
 ## Why Fortran
 
