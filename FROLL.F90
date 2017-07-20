@@ -73,7 +73,7 @@ contains
         character(len=*), intent(in) :: string_fragment
         character(len=len_trim(string_fragment)) :: working_string
         type(formula_fragment) :: roll_fragment
-        integer :: i, dice_count, dice_sides, modifier
+        integer :: di, dice_count, dice_sides, modifier
         logical :: negative
 
         working_string = trim(string_fragment)
@@ -86,15 +86,15 @@ contains
             working_string = working_string(2:)
         end if
 
-        i = scan(working_string, "d")
+        di = scan(working_string, "d")
 
-        if (i /= 0 .and. i/= 1) then
-            read(working_string(1:i - 1),*) dice_count
-            read(working_string(i + 1:),*) dice_sides
+        if (di /= 0 .and. di/= 1) then
+            read(working_string(1:di - 1),*) dice_count
+            read(working_string(di + 1:),*) dice_sides
             modifier = 0
-        else if (i == 1) then
+        else if (di == 1) then
             dice_count = 1
-            read(working_string(i + 1:),*) dice_sides
+            read(working_string(di + 1:),*) dice_sides
             modifier = 0
         else
             dice_count = 0
@@ -117,7 +117,7 @@ contains
 
         do i = 1, separations
             scan_index = scan(working_string, delimiter // delimiter2, .true.)
-            if (scan_index > 0) then
+            if (scan_index /= 0) then
                 out_string_array(separations + 1 - i) = working_string(scan_index:)
                 working_string = working_string(:scan_index - 1)
             else
