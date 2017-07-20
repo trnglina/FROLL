@@ -21,3 +21,11 @@ In its current state, many features are not yet supported, yet support may be ad
 - Fudge dice
 
 - Selective results
+
+## Why Fortran
+
+This was primarily an exercise in learning Fortran. As a result, the code may not be idiomatic (if idiomatic Fortran exists these days) or optimal.
+
+## License
+
+froll is Public Domain software available under the Creative Commons 0. See [LICENSE](LICENSE) and [COPYING](COPYING) for more information.
