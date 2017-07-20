@@ -24,6 +24,8 @@ In its current state, many features are not yet supported, yet support may be ad
 
 ## TODO
 
+- [ ] Sanitize input to avoid crashing
+
 - [ ] Validate input to avoid crashing
 
 - [ ] Better command line tool
