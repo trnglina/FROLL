@@ -69,41 +69,6 @@ contains
         r = roll_result(rolls, total_modifier, sum(rolls) + total_modifier)
     end function roll
 
-    function random_between(low, high)
-        real :: r
-        integer :: low, high, random_between
-        call init_random_seed()
-        call random_number(r)
-        random_between = floor((r * high) + low)
-    end function random_between
-
-    subroutine init_random_seed()
-        integer, allocatable :: seed(:)
-        integer :: i, n, pid, t(2), s
-        integer(8) :: count
-
-        call random_seed(size = n)
-        allocate(seed(n))
-        call system_clock(count)
-        if (count /= 0) then
-            t = transfer(count, t)
-        end if
-        s = ieor(t(1), t(2))
-        pid = getpid() + 1099279
-        s = ieor(s, pid)
-        if (n >= 3) then
-            seed(1) = t(1) + 36269
-            seed(2) = t(2) + 72551
-            seed(3) = pid
-            if (n > 3) then
-                seed(4:) = s + 37 * (/ (i, i = 0, n - 4) /)
-            end if
-        else
-            seed = s + 37 * (/ (i, i = 0, n - 1 ) /)
-        end if
-        call random_seed(put=seed)
-    end subroutine init_random_seed
-
     pure function parse_formula_fragment(string_fragment) result(roll_fragment)
         character(len=*), intent(in) :: string_fragment
         character(len=len_trim(string_fragment)) :: working_string
@@ -123,8 +88,12 @@ contains
 
         i = scan(working_string, "d")
 
-        if (i /= 0) then
+        if (i /= 0 .and. i/= 1) then
             read(working_string(1:i - 1),*) dice_count
+            read(working_string(i + 1:),*) dice_sides
+            modifier = 0
+        else if (i == 1) then
+            dice_count = 1
             read(working_string(i + 1:),*) dice_sides
             modifier = 0
         else
@@ -144,7 +113,6 @@ contains
         character(len=50) :: out_string_array(1:count_segments(in_string, delimiter) + count_segments(in_string, delimiter2) + 1)
 
         separations = count_segments(in_string, delimiter) + count_segments(in_string, delimiter2) + 1
-
         working_string = replace_text(in_string, " ", "")
 
         do i = 1, separations
@@ -187,6 +155,41 @@ contains
             out_string = trim(out_string(:i - 1) // replacement // out_string(i + 1 + nt:))
         end do
     end function replace_text
+
+    function random_between(low, high)
+        real :: r
+        integer :: low, high, random_between
+        call init_random_seed()
+        call random_number(r)
+        random_between = floor((r * high) + low)
+    end function random_between
+
+    subroutine init_random_seed()
+        integer, allocatable :: seed(:)
+        integer :: i, n, pid, t(2), s
+        integer(8) :: count
+
+        call random_seed(size = n)
+        allocate(seed(n))
+        call system_clock(count)
+        if (count /= 0) then
+            t = transfer(count, t)
+        end if
+        s = ieor(t(1), t(2))
+        pid = getpid() + 1099279
+        s = ieor(s, pid)
+        if (n >= 3) then
+            seed(1) = t(1) + 36269
+            seed(2) = t(2) + 72551
+            seed(3) = pid
+            if (n > 3) then
+                seed(4:) = s + 37 * (/ (i, i = 0, n - 4) /)
+            end if
+        else
+            seed = s + 37 * (/ (i, i = 0, n - 1 ) /)
+        end if
+        call random_seed(put=seed)
+    end subroutine init_random_seed
 end module froll
 
 program froll_test
