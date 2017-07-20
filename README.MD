@@ -22,6 +22,12 @@ In its current state, many features are not yet supported, yet support may be ad
 
 - Selective results
 
+---
+
+- Validate input to avoid crashing
+
+- Better command line tool
+
 ## Why Fortran
 
 This was primarily an exercise in learning Fortran. As a result, the code may not be idiomatic (if idiomatic Fortran exists these days) or optimal.
