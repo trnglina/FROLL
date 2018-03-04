@@ -1,5 +1,7 @@
 # froll - Just a dice roller.
 
+**Abandoned as of 04/03/2018**
+
 A dice roller accepting basic dice notation written in Fortran.
 
 ## Supported inputs
